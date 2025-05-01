@@ -57,19 +57,35 @@ app.get('/fetchReviews/dealer/:id', async (req, res) => {
 });
 
 // Express route to fetch all dealerships
-app.get('/fetchDealers', async (req, res) => {
-//Write your code here
-});
-
-// Express route to fetch Dealers by a particular state
-app.get('/fetchDealers/:state', async (req, res) => {
-//Write your code here
-});
-
-// Express route to fetch dealer by a particular id
-app.get('/fetchDealer/:id', async (req, res) => {
-//Write your code here
-});
+app.get('/fetchDealers', function (req, res) {
+    Dealerships.find().then(function (documents) {
+      res.json(documents);
+    }).catch(function (error) {
+      res.status(500).json({ error: 'Error fetching dealerships' });
+    });
+  });
+  
+  // Express route to fetch dealers by a particular state
+  app.get('/fetchDealers/:state', function (req, res) {
+    Dealerships.find({ state: req.params.state }).then(function (documents) {
+      res.json(documents);
+    }).catch(function (error) {
+      res.status(500).json({ error: 'Error fetching dealerships by state' });
+    });
+  });
+  
+  // Express route to fetch a dealer by a particular id
+  app.get('/fetchDealer/:id', function (req, res) {
+    Dealerships.findOne({ id: parseInt(req.params.id) }).then(function (dealer) {
+      if (dealer) {
+        res.json(dealer);
+      } else {
+        res.status(404).json({ error: 'Dealer not found' });
+      }
+    }).catch(function (error) {
+      res.status(500).json({ error: 'Error fetching dealer by ID' });
+    });
+  });
 
 //Express route to insert review
 app.post('/insert_review', express.raw({ type: '*/*' }), async (req, res) => {
