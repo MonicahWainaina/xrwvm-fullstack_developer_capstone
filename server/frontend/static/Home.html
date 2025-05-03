@@ -7,57 +7,87 @@
 <script>
 
 const logout = async (e) => {
-//Include the code for logout here.
-let logout_url = window.location.origin+"/djangoapp/logout";
+  // ... (your logout function remains the same)
+  let logout_url = window.location.origin+"/djangoapp/logout";
   const res = await fetch(logout_url, {
     method: "GET",
   });
 
-  const json = await res.json();
-  if (json) {
-    let username = sessionStorage.getItem('username');
-    sessionStorage.removeItem('username');
-    window.location.href = window.location.origin;
-    window.location.reload();
-    alert("Logging out "+username+"...")
+  const json = await res.json(); // Uncomment this line
+  if (json) { // Uncomment this line
+    let username = sessionStorage.getItem('username'); // Uncomment this line
+    sessionStorage.removeItem('username'); // Uncomment this line
+    window.location.href = window.location.origin; // Uncomment this line
+    window.location.reload(); // Uncomment this line
+    alert("Logging out "+username+"...") // Uncomment this line
   }
-  else {
-    alert("The user could not be logged out.")
+  else { // Uncomment this line
+    alert("The user could not be logged out.") // Uncomment this line
   }
 };
 
 let checkSession = ()=>{
   let curr_user = sessionStorage.getItem("username");
+  let loginLogoutDiv = document.getElementById("loginlogout");
+  loginLogoutDiv.innerHTML = ''; // Clear previous content
+
+  const buttonBackgroundColor = '#40E0D0'; // Try this darker turquoise
+  const buttonBorderColor = '#40E0D0';
 
   if (curr_user && curr_user !== "") {
-    document.getElementById("loginlogout").innerHTML = 
-    '<span class="homepage_links">' + curr_user +'</span>' +
-    '<a class="homepage_links" onclick="logout()" href="/">Logout</a>'
+    let usernameSpan = document.createElement('span');
+    usernameSpan.className = 'nav-link text-white fw-bold me-2';
+    usernameSpan.textContent = curr_user;
+
+    let logoutLink = document.createElement('a');
+    logoutLink.className = 'btn btn-lg text-white fw-bold';
+    logoutLink.style.backgroundColor = buttonBackgroundColor;
+    logoutLink.style.borderColor = buttonBorderColor;
+    logoutLink.href = '/';
+    logoutLink.textContent = 'Logout';
+    logoutLink.onclick = logout;
+
+    loginLogoutDiv.appendChild(usernameSpan);
+    loginLogoutDiv.appendChild(logoutLink);
+
   } else {
-    document.getElementById("loginlogout").innerHTML = 
-    '<a class="homepage_links" href="/login">Login</a>'+
-    '<a class="homepage_links"  href="/register">Register</a>'
+    let loginLink = document.createElement('a');
+    loginLink.className = 'btn btn-lg text-white fw-bold me-2';
+    loginLink.style.backgroundColor = buttonBackgroundColor;
+    loginLink.style.borderColor = buttonBorderColor;
+    loginLink.href = '/login';
+    loginLink.textContent = 'Login';
+
+    let registerLink = document.createElement('a');
+    registerLink.className = 'btn btn-lg text-white fw-bold';
+    registerLink.style.backgroundColor = buttonBackgroundColor;
+    registerLink.style.borderColor = buttonBorderColor;
+    registerLink.href = '/register';
+    registerLink.textContent = 'Register';
+
+    loginLogoutDiv.appendChild(loginLink);
+    loginLogoutDiv.appendChild(registerLink);
   }
- }
+}
 </script>
 </head>
 <body onload="checkSession()">
 <nav class="navbar navbar-expand-lg navbar-light" style="background-color:darkturquoise; height: 1in;">
   <div class="container-fluid">
-    <h2 style="padding-right: 5%;">Dealerships</h2>
+    <h2 style="padding-right: 5%; color: white; font-weight: bold;" href="/">Capstone Dealerships</h2>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" style="font-size: larger;" aria-current="page" href="#">Home</a>
+          <a class="nav-link active" style="font-size: larger; color: white; font-weight: bold;" aria-current="page" href="#">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" style="font-size: larger;" href="/about">About Us</a>
+          <a class="nav-link" style="font-size: larger; color: white; font-weight: bold;" href="/about">About Us</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" style="font-size: larger;" href="/contact">Contact Us</a>
+          <a class="nav-link" style="font-size: larger; color: white; font-weight: bold;" href="/contact">Contact Us</a>
         </li>
       </ul>
       <span class="navbar-text">
@@ -67,14 +97,12 @@ let checkSession = ()=>{
     </div>
   </div>
 </nav>
-<div style="display: flex;flex-direction: column;">
-<div class="card" style="width: 50%;margin-top: 50px;align-self: center;">
-  <img src="static/car_dealership.jpg" class="card-img-top" alt="...">
-  <div class="banner">
-    <h5>Welcome to our Dealerships!</h5>
-    <a href="/dealers" class="btn" style="background-color: aqua;margin:10px">View Dealerships</a>
+<div class="hero-section">
+    <div class="overlay-content">
+      <h5 class="hero-title">Welcome to our Dealerships!</h5>
+      <a href="/dealers" class="btn btn-primary hero-button" style="background-color: #40E0D0; border-color: #40E0D0; font-weight: bold; color: white;">View Dealerships</a>
+    </div>
   </div>
-</div>
 </div>
 </body>
 </html>

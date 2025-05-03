@@ -87,7 +87,7 @@ const Dealer = () => {
         ) : dealerError ? (
           <h1 style={{ color: "red" }}>{dealerError}</h1>
         ) : dealer ? (
-          <h1 style={{ color: "grey" }}>{dealer.full_name}{postReview}</h1>
+          <h1 style={{ color: "grey" }}>{dealer.full_name}</h1>
         ) : (
           <h1 style={{ color: "grey" }}>Dealer Details Not Found</h1>
         )}
@@ -96,7 +96,22 @@ const Dealer = () => {
             {dealer.city},{dealer.address}, Zip - {dealer.zip}, {dealer.state}
           </h4>
         )}
-        <a href={`/searchcars/${id}`}>SearchCars</a>
+        <a
+          href={`/searchcars/${id}`}
+          className="btn btn-primary" // Use Bootstrap's button classes
+          style={{
+            backgroundColor: '#40E0D0', // Match button color
+            borderColor: 'black',
+            fontWeight: 'bold',
+            color: 'white',
+            marginTop: '10px', // Add some margin to separate from the address
+            padding: '17px 20px',  // Add padding for better button appearance
+            borderRadius: '5px', // Add border radius for rounded corners
+          }}
+        >
+          Search Cars
+        </a>
+        {postReview}
       </div>
       <div className="reviews_panel">
         {reviews.length === 0 && unreviewed === false ? (
