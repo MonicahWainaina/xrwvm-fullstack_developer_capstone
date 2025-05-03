@@ -92,10 +92,11 @@ const Dealer = () => {
           <h1 style={{ color: "grey" }}>Dealer Details Not Found</h1>
         )}
         {dealer && (
-          <h4 style={{ color: "grey" }}>
+          <h4 style={{ color: "grey" }}>	
             {dealer.city},{dealer.address}, Zip - {dealer.zip}, {dealer.state}
           </h4>
         )}
+        <a href={`/searchcars/${id}`}>SearchCars</a>
       </div>
       <div className="reviews_panel">
         {reviews.length === 0 && unreviewed === false ? (
